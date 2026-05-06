@@ -6,6 +6,7 @@ body {
   margin: 0;
   min-height: 100vh;
   padding: 2rem;
+  overflow-x: hidden;
   font-family: "Trebuchet MS", Arial, sans-serif;
   background:
     radial-gradient(circle at top, rgba(125, 211, 252, 0.45), transparent 30%),
@@ -13,9 +14,38 @@ body {
   color: #e2e8f0;
 }
 
+.cursor-halo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-50%, -50%, 0);
+  background:
+    radial-gradient(
+      circle,
+      rgba(125, 211, 252, 0.26) 0%,
+      rgba(96, 165, 250, 0.18) 35%,
+      rgba(59, 130, 246, 0.08) 55%,
+      transparent 72%
+    );
+  filter: blur(16px);
+  transition: opacity 180ms ease;
+  z-index: 0;
+}
+
+.cursor-halo.is-visible {
+  opacity: 1;
+}
+
 .hero {
   width: min(92vw, 52rem);
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
   padding: 3rem;
   border-radius: 1.5rem;
   text-align: left;
@@ -99,6 +129,10 @@ details[open] summary::after {
 @media (max-width: 640px) {
   body {
     padding: 1rem;
+  }
+
+  .cursor-halo {
+    display: none;
   }
 
   .hero {
