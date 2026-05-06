@@ -1,6 +1,15 @@
-const button = document.getElementById("hello-button");
-const message = document.getElementById("message");
+const skillCards = document.querySelectorAll(".skill-card");
 
-button.addEventListener("click", () => {
-  message.textContent = "Hello from JustinWebsite!";
+skillCards.forEach((card) => {
+  card.addEventListener("toggle", () => {
+    if (!card.open) {
+      return;
+    }
+
+    skillCards.forEach((otherCard) => {
+      if (otherCard !== card) {
+        otherCard.open = false;
+      }
+    });
+  });
 });
