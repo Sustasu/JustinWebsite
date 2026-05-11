@@ -3,65 +3,242 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Justin Website</title>
+    <meta
+      name="description"
+      content="CV website for Iustin BCS, Senior QA Engineer with 13+ years of manual, automation, API, mobile, AI, and back-end testing experience."
+    />
+    <title>Iustin BCS | Senior QA Engineer</title>
+    <link rel="icon" href="assets/logo-black.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="cursor-halo" aria-hidden="true"></div>
-    <main class="hero">
-      <p class="eyebrow">Testing Skills</p>
-      <h1>Iustin BCS</h1>
-      <p class="subtitle">
-        A practical QA-focused profile covering hands-on testing, automation,
-        and AI agent quality validation.
-      </p>
 
-      <section class="skills" aria-label="Skills and experience">
-        <details class="skill-card">
-          <summary>Manual testing</summary>
-          <div class="skill-content">
-            <p>
-              Experienced in exploratory testing, regression testing, smoke
-              testing, and validating user flows across web applications.
-            </p>
-            <p>
-              Comfortable writing clear bug reports, reproducing defects,
-              documenting edge cases, and checking that releases meet expected
-              user behavior before sign-off.
-            </p>
-          </div>
-        </details>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="#top" aria-label="Iustin BCS home">
+          <img src="assets/logo-black.svg" alt="" />
+        </a>
+        <nav aria-label="Primary navigation">
+          <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
+          <a href="#clients">Clients</a>
+        </nav>
+      </div>
+    </header>
 
-        <details class="skill-card">
-          <summary>Automation testing</summary>
-          <div class="skill-content">
-            <p>
-              Built and maintained automated checks for repeatable scenarios,
-              focusing on stable regression coverage and faster feedback for
-              development teams.
-            </p>
-            <p>
-              Familiar with creating test scripts, validating UI flows, and
-              using automation to reduce manual effort on critical paths and
-              release-ready features.
-            </p>
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Senior QA Engineer</p>
+          <h1 id="hero-title">Iustin BCS</h1>
+          <p class="subtitle">
+            QA leader with 13+ years of experience across manual testing,
+            automation, API and back-end validation, mobile testing, AI tooling,
+            and LLM quality workflows.
+          </p>
+          <div class="hero-actions" aria-label="Contact actions">
+            <a class="button primary" href="mailto:baltaiustin@gmail.com">Email Iustin</a>
+            <a class="button secondary" href="tel:+447399835999">Call</a>
           </div>
-        </details>
+        </div>
 
-        <details class="skill-card">
-          <summary>AI agent testing</summary>
-          <div class="skill-content">
-            <p>
-              Interested in evaluating AI agents for reliability, instruction
-              following, edge-case behavior, and the quality of task outcomes.
-            </p>
-            <p>
-              Able to review prompts, test agent workflows, compare expected
-              versus actual behavior, and identify where reasoning, execution,
-              or safety handling can be improved.
-            </p>
-          </div>
-        </details>
+        <aside class="profile-panel" aria-label="Profile summary">
+          <div class="profile-mark" aria-hidden="true">QA</div>
+          <dl>
+            <div>
+              <dt>Based</dt>
+              <dd>London & Remote</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>Test strategy, automation, AI quality, team leadership</dd>
+            </div>
+            <div>
+              <dt>Contact</dt>
+              <dd>
+                <a href="mailto:baltaiustin@gmail.com">baltaiustin@gmail.com</a>
+              </dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="metrics" aria-label="Career highlights">
+        <div>
+          <span>13+</span>
+          <p>years in QA</p>
+        </div>
+        <div>
+          <span>30%</span>
+          <p>bug reduction in a cycle</p>
+        </div>
+        <div>
+          <span>90</span>
+          <p>days to production-ready QA process</p>
+        </div>
+      </section>
+
+      <section class="section two-column" id="skills" aria-labelledby="skills-title">
+        <div class="section-intro">
+          <p class="eyebrow">Technical Skills</p>
+          <h2 id="skills-title">Quality systems from test plan to release confidence.</h2>
+        </div>
+        <div class="skill-grid">
+          <span>Manual Testing</span>
+          <span>Automation Testing</span>
+          <span>AI Tools</span>
+          <span>LLM Testing</span>
+          <span>Selenium</span>
+          <span>Playwright</span>
+          <span>API Testing</span>
+          <span>Postman</span>
+          <span>CI/CD Tools</span>
+          <span>Test Strategy</span>
+          <span>Test Planning</span>
+          <span>Agile & Scrum</span>
+          <span>BrowserStack</span>
+          <span>Appium</span>
+          <span>Jira & Confluence</span>
+          <span>Cross-Functional Teams</span>
+        </div>
+      </section>
+
+      <section class="section" id="experience" aria-labelledby="experience-title">
+        <div class="section-intro">
+          <p class="eyebrow">Experience</p>
+          <h2 id="experience-title">Senior delivery across travel, enterprise, utilities, broadcast, and games.</h2>
+        </div>
+
+        <div class="timeline">
+          <article class="role">
+            <div class="role-meta">
+              <p>Aug 2019 - Present</p>
+              <span>London & Remote</span>
+            </div>
+            <div class="role-body">
+              <h3>Senior QA Engineer</h3>
+              <p class="company">Secret Escapes</p>
+              <ul>
+                <li>
+                  Built the QA function from the ground up, defining strategy,
+                  tooling, governance, test policies, entry and exit criteria,
+                  and traceability standards adopted company-wide.
+                </li>
+                <li>
+                  Introduced structured manual testing workflows with BrowserStack
+                  while keeping development velocity intact.
+                </li>
+                <li>
+                  Implemented and researched AI-powered automation and testing
+                  tools including Selenium, Playwright, Appium, KaneAI, Mabl,
+                  Applitools, TestCraft, and ChatGPT-assisted test writing.
+                </li>
+                <li>
+                  Supported customer-facing and back-end testing across APIs,
+                  flights, luxury hotel suppliers, dynamic room availability,
+                  amenities, web, iOS, and Android environments.
+                </li>
+                <li>
+                  Hired, onboarded, mentored, and managed QA staff and the mobile
+                  QA team through weekly meetings and monthly workshops.
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="role">
+            <div class="role-meta">
+              <p>2016 - 2019</p>
+              <span>London</span>
+            </div>
+            <div class="role-body">
+              <h3>QA Engineer Manager</h3>
+              <p class="company">Tangent</p>
+              <ul>
+                <li>
+                  Managed the QA team for an e-commerce platform built on SAP,
+                  improving stability, efficiency, and delivery quality.
+                </li>
+                <li>
+                  Led QA for high-profile clients including UK Power Network,
+                  Freesat, SAP, NATS, Carlsberg, and Sky.
+                </li>
+                <li>
+                  Built a device lab based on Google Analytics usage data, with
+                  coverage across major operating systems and real-world user
+                  conditions.
+                </li>
+                <li>
+                  Delivered exploratory, GUI, smoke, usability, end-to-end,
+                  functional, regression, localization, load, and UAT testing.
+                </li>
+                <li>
+                  Used Selenium Java, Cucumber, Katalon Studio, Lighthouse,
+                  Litmus, MySQL, Jira, Dialogflow, and Agile delivery practices.
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="role">
+            <div class="role-meta">
+              <p>May 2012 - Mar 2016</p>
+              <span>Bucharest</span>
+            </div>
+            <div class="role-body">
+              <h3>Senior QA Tester</h3>
+              <p class="company">Electronic Arts</p>
+              <ul>
+                <li>
+                  Created and executed detailed test cases and scenarios for AAA
+                  titles including FIFA, The Sims, SimCity, and Hasbro projects.
+                </li>
+                <li>
+                  Tested across iOS, Android, and Windows Phone to validate
+                  cross-device performance and compatibility.
+                </li>
+                <li>
+                  Supervised QA teams, assigned workloads, monitored progress,
+                  and delivered final test reports to stakeholders.
+                </li>
+                <li>
+                  Collaborated with game development teams to identify, document,
+                  and resolve gameplay and performance issues under tight release
+                  deadlines.
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section clients" id="clients" aria-labelledby="clients-title">
+        <div class="section-intro">
+          <p class="eyebrow">Previous Clients</p>
+          <h2 id="clients-title">Trusted across recognizable brands and platforms.</h2>
+        </div>
+        <div class="client-list">
+          <span>Secret Escapes</span>
+          <span>SAP</span>
+          <span>UK Power Network</span>
+          <span>Freesat</span>
+          <span>Sky</span>
+          <span>Electronic Arts</span>
+          <span>FIFA - EA Sports</span>
+          <span>The Sims - Maxis Team</span>
+        </div>
+      </section>
+
+      <section class="contact-strip" aria-label="Contact and references">
+        <div>
+          <p class="eyebrow">References</p>
+          <h2>Available upon request.</h2>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:baltaiustin@gmail.com">baltaiustin@gmail.com</a>
+          <a href="tel:+447399835999">(+44) 07399835999</a>
+        </div>
       </section>
     </main>
 
