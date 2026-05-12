@@ -10,7 +10,7 @@
     <title>Iustin BCS | Senior QA Engineer</title>
     <link rel="icon" href="assets/logo-black.svg" type="image/svg+xml" />    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet" />    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet" />    <link rel="stylesheet" href="styles.css?v=3" />
   </head>
   <body>
     <div class="cursor-halo" aria-hidden="true"></div>
@@ -117,6 +117,7 @@
         <div class="timeline">
           <article class="role">
             <div class="role-meta">
+              <div class="role-logo-placeholder" aria-hidden="true"></div>
               <p>Aug 2019 - Present</p>
               <span>London & Remote</span>
             </div>
@@ -175,10 +176,23 @@
                 </li>
               </ul>
             </div>
+            <div class="experience-card-stack" aria-label="Secret Escapes details">
+              <button class="experience-info-card" type="button" data-modal-title="QA Foundation" data-modal-copy-one="Defined a full quality strategy for a team with no prior QA process." data-modal-copy-two="Created test policies, release criteria, traceability standards, and governance within the first 90 days.">
+                <h2>QA Foundation</h2>
+                <p>Defined a full quality strategy for a team with no prior QA process.</p>
+                <p>Created test policies, release criteria, traceability standards, and governance within the first 90 days.</p>
+              </button>
+              <button class="experience-info-card" type="button" data-modal-title="Automation Scope" data-modal-copy-one="Used Selenium, Playwright, Appium, and AI-assisted tooling across web and mobile projects." data-modal-copy-two="Reduced maintenance pressure while supporting customer journeys, supplier APIs, iOS, Android, and back-end flows.">
+                <h2>Automation Scope</h2>
+                <p>Used Selenium, Playwright, Appium, and AI-assisted tooling across web and mobile projects.</p>
+                <p>Reduced maintenance pressure while supporting customer journeys, supplier APIs, iOS, Android, and back-end flows.</p>
+              </button>
+            </div>
           </article>
 
           <article class="role">
             <div class="role-meta">
+              <div class="role-logo-placeholder" aria-hidden="true"></div>
               <p>2016 - 2019</p>
               <span>London</span>
             </div>
@@ -233,10 +247,23 @@
                 </li>
               </ul>
             </div>
+            <div class="experience-card-stack" aria-label="Tangent details">
+              <button class="experience-info-card" type="button" data-modal-title="Team Leadership" data-modal-copy-one="Managed QA delivery for SAP-based e-commerce work and multiple client projects." data-modal-copy-two="Kept delivery stable across high-profile accounts including UK Power Network, Freesat, SAP, NATS, Carlsberg, and Sky.">
+                <h2>Team Leadership</h2>
+                <p>Managed QA delivery for SAP-based e-commerce work and multiple client projects.</p>
+                <p>Kept delivery stable across high-profile accounts including UK Power Network, Freesat, SAP, NATS, Carlsberg, and Sky.</p>
+              </button>
+              <button class="experience-info-card" type="button" data-modal-title="Device Strategy" data-modal-copy-one="Built a device lab around analytics-backed customer demographics and real-world usage." data-modal-copy-two="Combined exploratory, GUI, smoke, usability, regression, localization, load, and UAT testing into client-ready coverage.">
+                <h2>Device Strategy</h2>
+                <p>Built a device lab around analytics-backed customer demographics and real-world usage.</p>
+                <p>Combined exploratory, GUI, smoke, usability, regression, localization, load, and UAT testing into client-ready coverage.</p>
+              </button>
+            </div>
           </article>
 
           <article class="role">
             <div class="role-meta">
+              <div class="role-logo-placeholder" aria-hidden="true"></div>
               <p>May 2012 - Mar 2016</p>
               <span>Bucharest</span>
             </div>
@@ -273,6 +300,18 @@
                 </li>
               </ul>
             </div>
+            <div class="experience-card-stack" aria-label="Electronic Arts details">
+              <button class="experience-info-card" type="button" data-modal-title="Game Quality" data-modal-copy-one="Created and executed test scenarios for AAA titles including FIFA, The Sims, SimCity, and Hasbro projects." data-modal-copy-two="Worked closely with development teams to surface gameplay, compatibility, and performance issues before release.">
+                <h2>Game Quality</h2>
+                <p>Created and executed test scenarios for AAA titles including FIFA, The Sims, SimCity, and Hasbro projects.</p>
+                <p>Worked closely with development teams to surface gameplay, compatibility, and performance issues before release.</p>
+              </button>
+              <button class="experience-info-card" type="button" data-modal-title="Team Delivery" data-modal-copy-one="Supervised QA teams, assigned workloads, tracked progress, and delivered reports to stakeholders." data-modal-copy-two="Trained new employees and improved testing materials to keep release cycles moving under tight deadlines.">
+                <h2>Team Delivery</h2>
+                <p>Supervised QA teams, assigned workloads, tracked progress, and delivered reports to stakeholders.</p>
+                <p>Trained new employees and improved testing materials to keep release cycles moving under tight deadlines.</p>
+              </button>
+            </div>
           </article>
         </div>
       </section>
@@ -306,6 +345,15 @@
       </section>
     </main>
 
-    <script src="script.js"></script>
+    <div class="experience-modal" role="dialog" aria-modal="true" aria-labelledby="experience-modal-title" hidden>
+      <div class="experience-modal-panel">
+        <button class="experience-modal-close" type="button" aria-label="Close details">x</button>
+        <h2 id="experience-modal-title"></h2>
+        <p class="experience-modal-copy"></p>
+        <p class="experience-modal-copy"></p>
+      </div>
+    </div>
+
+    <script src="script.js?v=3"></script>
   </body>
 </html>
