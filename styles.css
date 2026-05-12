@@ -71,6 +71,10 @@ a {
   color: inherit;
 }
 
+body.is-modal-open {
+  overflow: hidden;
+}
+
 .cursor-halo {
   --halo-red: 237;
   --halo-green: 0;
@@ -452,6 +456,13 @@ dd {
   padding-right: 1rem;
 }
 
+.role-logo-placeholder {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.25rem;
+  background: #000;
+}
+
 .role-meta p,
 .role-meta span,
 .company {
@@ -490,6 +501,109 @@ li {
 
 li::marker {
   color: var(--red);
+}
+
+.experience-card-stack {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 1rem;
+  margin-top: 0;
+  padding: 1rem;
+  border: 1px solid #d8d8d8;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.experience-info-card {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #d8d8d8;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.experience-info-card:hover,
+.experience-info-card:focus-visible {
+  border-color: var(--red);
+  outline: none;
+}
+
+.experience-info-card h2 {
+  margin: 0 0 0.65rem;
+  color: var(--ink);
+  font-size: 1.35rem;
+  line-height: 1.05;
+}
+
+.experience-info-card p {
+  margin: 0;
+  color: #222;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.experience-info-card p + p {
+  margin-top: 0.75rem;
+}
+
+.experience-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.experience-modal[hidden] {
+  display: none;
+}
+
+.experience-modal-panel {
+  width: min(34rem, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow-x: auto;
+  overflow-y: auto;
+  padding: 1.5rem;
+  border: 1px solid var(--red);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0.7rem 0.7rem 0 var(--red);
+}
+
+.experience-modal-close {
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 0 0 1.25rem auto;
+  border: 1px solid var(--ink);
+  padding: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.experience-modal-panel h2 {
+  margin: 0 0 1rem;
+  color: var(--ink);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.experience-modal-panel p {
+  color: #222;
+  font-family: "Courier New", Courier, monospace;
+  line-height: 1.55;
+}
+
+.experience-modal-panel p:last-child {
+  margin-bottom: 0;
 }
 
 .clients .section-intro {
