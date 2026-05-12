@@ -1,6 +1,6 @@
 :root {
-  --red: #ed0037;
-  --red-dark: #a90027;
+  --red: #C1121F;
+  --red-dark: rgb(169, 0, 39);
   --black: #020202;
   --panel: #242424;
   --panel-soft: #303030;
@@ -42,6 +42,11 @@
 
 html {
   scroll-behavior: smooth;
+ margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+    overscroll-behavior: none;
+
 }
 
 body {
@@ -51,7 +56,7 @@ body {
   font-family: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 92px),
-    linear-gradient(90deg, var(--red) 0%, #e60034 50%, #f1023b 100%);
+    linear-gradient(90deg, var(--red) 0%, #C1121F 50%, #f1023b 100%);
   color: var(--white);
 }
 
@@ -122,7 +127,7 @@ body.is-modal-open {
   z-index: 10;
   width: 100%;
   background: var(--black);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgb(169 0 39 / 25%);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.26);
 }
 
@@ -175,23 +180,13 @@ nav a.is-active {
 
 main {
   position: relative;
-  width: min(1280px, calc(100% - 2rem));
+  width: min(1440px, calc(100% - 2rem));
   margin: 0 auto 4rem;
   padding: clamp(1rem, 3vw, 2.6rem);
   background: var(--black);
   box-shadow: var(--shadow);
 }
 
-main::before {
-  content: "CV/Portfolio";
-  position: absolute;
-  top: 1.8rem;
-  right: clamp(1rem, 3vw, 2.6rem);
-  color: var(--white);
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.82rem;
-  letter-spacing: 0.12em;
-}
 
 main::after {
   content: "";
@@ -303,25 +298,16 @@ h3 {
 .profile-panel {
   position: relative;
   align-self: center;
-  min-height: 24rem;
+  min-height: 40rem;
   padding: clamp(1.1rem, 3vw, 1.65rem);
-  background: var(--panel);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: url(https://i.ibb.co/G4C08q1w/justin-1-Rectangle-Copy-8-Rectangle-Copy-9-Rectangle-Copy-11-Rectangle-Copy-10-Rectangle-C.png);
   box-shadow: 1.1rem -1.1rem 0 var(--red);
+  background-size: auto;
+  background-position: center;
+    background-repeat: no-repeat;
+
 }
 
-.profile-panel::after {
-  content: "";
-  position: absolute;
-  right: 1.2rem;
-  bottom: 1.2rem;
-  width: 1.55rem;
-  height: 1.55rem;
-  border-right: 2px solid var(--white);
-  border-bottom: 2px solid var(--white);
-  transform: rotate(45deg);
-  opacity: 0.9;
-}
 
 .profile-mark {
   display: grid;
@@ -368,6 +354,7 @@ dd {
   padding: 1.25rem;
   background: var(--panel);
   overflow: hidden;
+  border-radius: 3px;
 }
 
 .metrics div::before {
@@ -426,7 +413,6 @@ dd {
 
 .skill-grid span,
 .client-list span {
-  min-height: 4rem;
   border-left: 0.35rem solid var(--red);
   padding: 1.1rem;
   background: var(--panel);
@@ -434,6 +420,7 @@ dd {
   font-family: "Courier New", Courier, monospace;
   font-size: 0.95rem;
   letter-spacing: 0.04em;
+  border-radius: 3px;
 }
 
 .timeline {
@@ -452,15 +439,32 @@ dd {
 }
 
 .role-meta {
-  border-right: 1px solid #d8d8d8;
-  padding-right: 1rem;
+border-right: 1px solid rgb(169 0 39 / 10%);
+padding-right: 1rem;
 }
 
-.role-logo-placeholder {
+.role-logo-placeholder1 {
   width: 80px;
   height: 80px;
   margin-bottom: 1.25rem;
-  background: #000;
+  background-image: url("https://i.ibb.co/7JcZXLPV/Screenshot-2026-05-12-at-15-03-37.png");
+background-repeat: no-repeat;
+background-size: cover;
+}
+.role-logo-placeholder2 {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.25rem;
+  background-image: url("https://i.ibb.co/MYNQQdt/Screenshot-2026-05-12-at-15-04-15.png");
+background-repeat: no-repeat;
+background-size: cover;
+}.role-logo-placeholder3 {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.25rem;
+  background-image: url("https://i.ibb.co/YF8zbWKC/Screenshot-2026-05-12-at-15-04-24.png");
+background-repeat: no-repeat;
+background-size: cover;
 }
 
 .role-meta p,
@@ -504,13 +508,17 @@ li::marker {
 }
 
 .experience-card-stack {
-  grid-column: 1 / -1;
-  display: grid;
-  gap: 1rem;
-  margin-top: 0;
-  padding: 1rem;
-  border: 1px solid #d8d8d8;
-  background: rgba(0, 0, 0, 0.03);
+ grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    display: grid;
+    gap: 1rem;
+    margin-top: 0;
+    padding: 1rem;
+    align-items: stretch;
+    justify-items: stretch;
+    justify-content: stretch;
+    align-content: stretch;
 }
 
 .experience-info-card {
@@ -644,7 +652,10 @@ li::marker {
 
   .profile-panel {
     box-shadow: 0.7rem -0.7rem 0 var(--red);
-  }
+    min-height: 20rem;
+    background-size: inherit;
+    background-position: top;
+    }
 
   .role-meta {
     border-right: 0;
@@ -715,11 +726,15 @@ li::marker {
   }
 
   .metrics div {
-    min-height: 7.4rem;
+    min-height: 7.5rem;
+
   }
 
   .profile-panel {
     min-height: auto;
+     min-height: 20rem;
+    background-size: inherit;
+    background-position: top;
   }
 
   .cursor-halo {
