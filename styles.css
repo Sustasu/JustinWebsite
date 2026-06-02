@@ -456,6 +456,14 @@ dd {
   background: #e75555;
 }
 
+.recommendation-action:focus-visible,
+.recommendation-tab:focus-visible,
+.experience-modal-close:focus-visible,
+nav a:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
 .recommendation-meta {
   display: flex;
   flex-wrap: wrap;
@@ -689,7 +697,7 @@ li::marker {
   max-height: calc(100vh - 2rem);
   overflow-x: auto;
   overflow-y: auto;
-  padding: 3rem;
+  padding: 2rem;
   border: 1px solid rgba(193,18,31,0.15);
   background: #fffdfa;
   color: var(--ink);
@@ -700,7 +708,7 @@ li::marker {
 /* Wider modal for PDF slideshow */
 .experience-modal-panel.modal-pdf,
 .experience-modal-panel.modal-gallery {
-  width: 90% !important;
+  width: 80% !important;
 }
 
 .pdf-slideshow,
@@ -741,7 +749,7 @@ li::marker {
   padding: 1rem 0;
 }
 .slide-viewer .slide-image {
-  max-width: 100%;
+  max-width: 75%;
   width: auto;
   display: none;
   box-shadow: 0 8px 30px rgba(0,0,0,0.06);
@@ -1040,6 +1048,63 @@ li::marker {
     gap: 1rem;
     margin-top: 0;
     padding: 1rem;
+  }
+
+  .experience-modal-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .experience-modal-close {
+    align-self: flex-start;
+  }
+
+  .slide-controls,
+  .pdf-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .slide-controls .slide-prev,
+  .slide-controls .slide-next,
+  .pdf-prev,
+  .pdf-next,
+  .recommendation-action {
+    width: 100%;
+  }
+
+  .slide-viewer .slide-image {
+    max-width: 100%;
+  }
+
+  .recommendation-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .recommendation-tabs {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .recommendation-tab {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .recommendation-action {
+    margin-left: 0;
+  }
+
+  .recommendation-card,
+  .testimonial-card {
+    padding: 1.4rem;
+  }
+
+  .experience-modal-panel {
+    width: min(95vw, 70rem);
+    padding: 1.5rem;
   }
 
 }
