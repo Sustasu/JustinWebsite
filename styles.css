@@ -320,6 +320,41 @@ dd {
   line-height: 1.35;
 }
 
+.metrics .experience-info-card {
+  margin-top: 1rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--red);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 400;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.metrics .experience-info-card span {
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  font-size: 2rem;
+}
+
+.metrics .experience-info-card:hover,
+.metrics .experience-info-card:focus-visible {
+  outline: none;
+}
+
+@keyframes pulse-right {
+  0%, 20%, 100% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(4px);
+  }
+}
+
 .section {
   padding: clamp(4rem, 9vw, 7rem) 0 0;
 }
@@ -356,6 +391,142 @@ dd {
   font-size: 0.95rem;
   letter-spacing: 0.04em;
   border-radius: 3px;
+}
+
+.recommendation-grid,
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.recommendation-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.recommendation-tabs {
+  display: inline-flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 0.25rem;
+}
+
+.recommendation-tab {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.recommendation-tab:hover,
+.recommendation-tab:focus {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.recommendation-tab.active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.recommendation-action {
+  margin-left: auto;
+  background: var(--red);
+  border: none;
+  color: var(--white);
+  padding: 0.85rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.recommendation-action:hover,
+.recommendation-action:focus {
+  transform: translateY(-1px);
+  background: #e75555;
+}
+
+.recommendation-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.recommendation-avatar {
+  flex: 0 0 auto;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.recommendation-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.recommendation-text-meta {
+  min-width: 0;
+}
+
+.recommendation-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.recommendation-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.recommendation-loading {
+  grid-column: 1 / -1;
+  color: var(--white);
+  opacity: 0.72;
+}
+
+.testimonial-card,
+.recommendation-card {
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.08);
+}
+
+.testimonial-quote,
+.recommendation-quote {
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--white);
+}
+
+.testimonial-author,
+.recommendation-author {
+  font-weight: 700;
+  color: var(--red);
 }
 
 .timeline {
@@ -442,18 +613,25 @@ li::marker {
   color: var(--red);
 }
 
+
 .experience-card-stack {
- grid-column: 1 / -1;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    display: grid;
-    gap: 1rem;
-    margin-top: 0;
-    padding: 1rem;
-    align-items: stretch;
-    justify-items: stretch;
-    justify-content: stretch;
-    align-content: stretch;
+  width: 100%;
+  grid-column: 1 / -1;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  display: grid;
+  gap: 1rem;
+  margin-top: 0;
+  padding: 1rem;
+  align-items: stretch;
+  justify-items: stretch;
+  justify-content: stretch;
+  align-content: stretch;
+}
+
+/* Two cards side by side for Secret Escapes only */
+#experience .experience-card-stack[aria-label="Secret Escapes details"] {
+  grid-template-columns: 1fr 1fr;
 }
 
 .experience-info-card {
@@ -507,22 +685,99 @@ li::marker {
 }
 
 .experience-modal-panel {
-  width: min(34rem, 100%);
+  width: min(70rem, 100%);
   max-height: calc(100vh - 2rem);
   overflow-x: auto;
   overflow-y: auto;
-  padding: 1.5rem;
-  border: 1px solid var(--red);
-  background: var(--paper);
+  padding: 3rem;
+  border: 1px solid rgba(193,18,31,0.15);
+  background: #fffdfa;
   color: var(--ink);
-  box-shadow: 0.7rem 0.7rem 0 var(--red);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+  border-radius: 3px;
+}
+
+/* Wider modal for PDF slideshow */
+.experience-modal-panel.modal-pdf,
+.experience-modal-panel.modal-gallery {
+  width: 90% !important;
+}
+
+.pdf-slideshow,
+.image-slideshow {
+  display: grid;
+  gap: 0.1rem;
+}
+.pdf-controls,
+.slide-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.pdf-controls .pdf-info,
+.slide-controls .slide-info {
+  font-weight: 700;
+  color: #222;
+}
+.pdf-prev,
+.pdf-next,
+.slide-prev,
+.slide-next {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 0.75rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.slide-viewer {
+  position: relative;
+  width: 100%;
+  min-height: 24rem;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  padding: 1rem 0;
+}
+.slide-viewer .slide-image {
+  max-width: 100%;
+  width: auto;
+  display: none;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+.slide-viewer .slide-image.active {
+  display: block;
+}
+.slide-pagination {
+  display: none;
+
+}
+.slide-pagination button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.06);
+  padding: 0;
+}
+.slide-pagination button.active {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.experience-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .experience-modal-close {
-  display: block;
   width: 2.25rem;
   height: 2.25rem;
-  margin: 0 0 1.25rem auto;
+  margin: 0;
   border: 1px solid var(--ink);
   padding: 0;
   background: transparent;
@@ -534,19 +789,123 @@ li::marker {
 }
 
 .experience-modal-panel h2 {
-  margin: 0 0 1rem;
-  color: var(--ink);
+  margin: 0;
+  color: var(--red);
   font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.experience-modal-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  margin: 1.25rem 0;
+  align-items: start;
+}
+
+.experience-modal-column {
+  min-width: 0;
+}
+
+.experience-modal-column h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.15rem;
+}
+
+.experience-modal-column ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.35rem;
 }
 
 .experience-modal-panel p {
   color: #222;
   font-family: "Courier New", Courier, monospace;
-  line-height: 1.55;
+  line-height: 1.7;
+  font-size: 0.98rem;
+  margin-bottom: 1rem;
 }
 
 .experience-modal-panel p:last-child {
   margin-bottom: 0;
+}
+.experience-modal-highlight {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 1px solid rgba(194, 66, 66, 0.18);
+  border-left: 6px solid var(--red);
+  background: rgba(255, 245, 244, 0.95);
+}
+ .tools-images  div{
+  display:flex;
+
+ }
+.experience-modal-highlight h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--ink);
+}
+
+.experience-modal-highlight p {
+  margin: 0 0 1rem;
+}
+
+.experience-modal-highlight ul {
+  margin: 0.5rem 0 0 1.35rem;
+}
+.experience-modal-panel img {
+  max-width: 30%;
+  height: auto;
+  display: block;
+  margin: 1rem 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.experience-modal-panel img.modal-fullwidth {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+/* Emphasise inline strong keywords inside modals */
+.experience-modal-panel strong {
+  background: rgba(193,18,31,0.08);
+  color: var(--red);
+  padding: 0.08rem 0.35rem;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+/* Tools inline layout */
+.tools-inline {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.tools-inline-text {
+  margin: 0;
+  color: #222;
+  font-weight: 700;
+}
+.tools-images {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.tools-images img {
+  max-width: 15rem;
+  height: auto;
+  display: block;
+}
+.experience-modal-panel img.modal-fullwidth {
+  width: 100% !important;
+  max-width: 100%;
+}
+@media (max-width: 800px) {
+  .experience-modal-columns {
+    grid-template-columns: 1fr;
+  }
+  .tools-images img {
+    max-width: 40%;
+  }
 }
 
 .clients .section-intro {
