@@ -1,0 +1,7 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "sips": true,
+        "/usr/bin/osascript": true,
+        "true": true
+    }
+}
