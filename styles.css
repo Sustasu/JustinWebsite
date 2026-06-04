@@ -205,6 +205,22 @@ h3 {
   gap: 0.75rem;
 }
 
+.hero-actions-placeholder {
+  display: none;
+}
+
+.hero-actions.is-sticky {
+  position: fixed;
+  top: var(--sticky-actions-top, 0);
+  left: var(--sticky-actions-left, 0);
+  z-index: 20;
+  width: var(--sticky-actions-width, 100vw);
+  padding: 0.65rem max(1rem, calc((100vw - 1440px) / 2 + clamp(1rem, 3vw, 2.6rem)));
+  background: rgba(2, 2, 2, 0.92);
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(10px);
+}
+
 .button,
 .contact-links a {
   display: inline-flex;
