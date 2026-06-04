@@ -5,9 +5,79 @@ const experienceModalTitle = document.querySelector("#experience-modal-title");
 const experienceModalCopy = document.querySelectorAll(".experience-modal-copy");
 const experienceModalExtraContent = document.querySelector(".experience-modal-extra-content-container");
 const experienceModalClose = document.querySelector(".experience-modal-close");
+const heroActions = document.querySelector(".hero-actions");
 const sections = Array.from(navLinks)
   .map((link) => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
+
+if (heroActions) {
+  const stickyPlaceholder = document.createElement("div");
+  stickyPlaceholder.className = "hero-actions-placeholder";
+  stickyPlaceholder.setAttribute("aria-hidden", "true");
+  heroActions.after(stickyPlaceholder);
+
+  let stickyStart = 0;
+  let ticking = false;
+
+  const setStickyPosition = (sourceRect) => {
+    heroActions.style.setProperty("--sticky-actions-top", "0px");
+    heroActions.style.setProperty("--sticky-actions-left", "0px");
+    heroActions.style.setProperty("--sticky-actions-width", "100vw");
+  };
+
+  const measureHeroActions = () => {
+    const wasSticky = heroActions.classList.contains("is-sticky");
+
+    if (wasSticky) {
+      heroActions.classList.remove("is-sticky");
+      stickyPlaceholder.style.display = "none";
+    }
+
+    const rect = heroActions.getBoundingClientRect();
+    stickyStart = rect.top + window.scrollY;
+    setStickyPosition(rect);
+
+    if (wasSticky) {
+      stickyPlaceholder.style.display = "block";
+      stickyPlaceholder.style.height = `${rect.height}px`;
+      heroActions.classList.add("is-sticky");
+    }
+  };
+
+  const updateHeroActionsSticky = () => {
+    ticking = false;
+    const shouldStick = window.scrollY >= stickyStart - 1;
+
+    if (shouldStick && !heroActions.classList.contains("is-sticky")) {
+      const rect = heroActions.getBoundingClientRect();
+      stickyPlaceholder.style.display = "block";
+      stickyPlaceholder.style.height = `${rect.height}px`;
+      setStickyPosition(rect);
+      heroActions.classList.add("is-sticky");
+      return;
+    }
+
+    if (!shouldStick && heroActions.classList.contains("is-sticky")) {
+      heroActions.classList.remove("is-sticky");
+      stickyPlaceholder.style.display = "none";
+    }
+  };
+
+  const requestStickyUpdate = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeroActionsSticky);
+      ticking = true;
+    }
+  };
+
+  measureHeroActions();
+  updateHeroActionsSticky();
+  window.addEventListener("scroll", requestStickyUpdate, { passive: true });
+  window.addEventListener("resize", () => {
+    measureHeroActions();
+    requestStickyUpdate();
+  });
+}
 
 if ("IntersectionObserver" in window && sections.length > 0) {
   const observer = new IntersectionObserver(
