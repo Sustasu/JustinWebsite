@@ -10,9 +10,12 @@
     <title>Iustin BCS | Senior QA Engineer</title>
     <link rel="icon" href="assets/logo-black.svg" type="image/svg+xml" />    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet" />    <link rel="stylesheet" href="styles.css?v=4" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet" />    <link rel="stylesheet" href="styles.css?v=27" />
   </head>
   <body>
+    <div class="particle-backdrop" aria-hidden="true">
+      <canvas class="site-particle-canvas"></canvas>
+    </div>
 
     <header class="site-header">
       <div class="site-header-inner">
@@ -31,9 +34,9 @@
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow"><strong>Senior QA Engineer</strong> | <strong>Automation</strong> | <strong>Manual</strong> | <strong>AI Testing</strong> | <strong>Leadership</strong> </p>
-          <h1 id="hero-title"><strong>Iustin BCS</strong></h1>
+          <h1 id="hero-title">I turn risk into<br />release confidence.</h1>
           <p class="subtitle">
-            <strong>13+ years of expertise</strong> in <strong>manual</strong> and <strong>automation testing</strong>, including <strong>Selenium</strong>, <strong>Playwright</strong>, <strong>API</strong> and <strong>back-end testing</strong>.
+            <strong>Hi, I'm Justin.</strong> With over <strong>13 years of experience</strong> in <strong>manual</strong> and <strong>automation testing</strong>, including <strong>Selenium</strong>, <strong>Playwright</strong>, <strong>API</strong> and <strong>back-end testing</strong>.
              Skilled in <strong>AI tools</strong>, <strong>CI/CD pipelines</strong>, <strong>Agile</strong> and <strong>Scrum methodologies</strong> to drive quality and efficiency. <br><br>
              Strong track record in <strong>test strategy</strong>, <strong>planning</strong>, and <strong>automation</strong> while collaborating closely with <strong>cross-functional teams</strong>.
           </p>
@@ -45,8 +48,10 @@
           </div>
         </div>
 
-        <aside class="profile-panel" aria-label="Profile summary">
-
+        <aside class="hero-signal" aria-label="Quality engineering focus">
+          <p class="hero-signal-label">Quality, in motion</p>
+          <p>Automation · AI testing · Mobile · APIs</p>
+          <span>From test strategy to release confidence</span>
         </aside>
       </section>
 
@@ -111,7 +116,7 @@
       <section class="section two-column" id="skills" aria-labelledby="skills-title">
         <div class="section-intro">
           <p class="eyebrow">Technical Skills</p>
-          <h2 id="skills-title">Quality systems from test plan to release confidence.</h2>
+          <h2 id="skills-title">Quality systems from test plan to release.</h2>
         </div>
         <div class="skill-grid">
           <span>Manual Testing</span>
@@ -135,15 +140,14 @@
 
       <section class="section recommendations" id="recommendations" aria-labelledby="recommendations-title">
         <div class="section-intro">
-          <p class="eyebrow">Recommendations</p>
-          <h2 id="recommendations-title">LinkedIn recommendations</h2>
+          <p class="eyebrow">Don't take my word for it</p>
+          <h2 id="recommendations-title">Recommendations</h2>
         </div>
         <div class="recommendation-controls">
           <div class="recommendation-tabs" role="tablist" aria-label="Recommendation type tabs">
             <button type="button" class="recommendation-tab active" data-filter="received" role="tab" aria-selected="true">Received</button>
             <button type="button" class="recommendation-tab" data-filter="given" role="tab" aria-selected="false">Given</button>
           </div>
-          <button type="button" class="recommendation-action">Ask for or give a recommendation</button>
         </div>
         <div class="recommendation-grid" id="recommendation-grid">
           <div class="recommendation-loading">Loading recommendations…</div>
@@ -153,7 +157,7 @@
       <section class="section" id="experience" aria-labelledby="experience-title">
         <div class="section-intro">
           <p class="eyebrow"><strong>Experience</strong></p>
-          <h2 id="experience-title"><strong>Senior delivery</strong> across <strong>travel</strong>, <strong>enterprise</strong>, <strong>utilities</strong>, <strong>broadcast</strong>, and <strong>games</strong>.</h2>
+          <h2 id="experience-title"><strong>Delivery, delivery and delivery.</h2>
         </div>
 
         <div class="timeline">
@@ -385,7 +389,7 @@
       <section class="section clients" id="clients" aria-labelledby="clients-title">
         <div class="section-intro">
           <p class="eyebrow">Previous Clients</p>
-          <h2 id="clients-title">Trusted across recognizable brands and platforms.</h2>
+          <h2 id="clients-title">Trusted across recognizable platforms.</h2>
         </div>
         <div class="client-list">
           <span>Secret Escapes</span>
@@ -424,6 +428,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.min.js"></script>
-    <script src="script.js?v=4"></script>
+    <script src="script.js?v=7"></script>
+    <script type="module" src="hero-particles.js?v=17"></script>
   </body>
 </html>
