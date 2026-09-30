@@ -1960,3 +1960,270 @@ li::marker {
 
 }
 }
+
+.robot-guide[hidden] {
+  display: none;
+}
+
+.robot-guide {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  width: min(27rem, 100vw);
+  height: 15rem;
+  pointer-events: none;
+  color: #111111;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
+.robot-character {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0;
+  width: 7.5rem;
+  height: 150px;
+  opacity: 0;
+  transform: translateX(9rem);
+}
+
+.robot-guide.is-visible .robot-character {
+  animation: robotWalkIn 4.8s cubic-bezier(0.2, 0.75, 0.25, 1) forwards;
+}
+
+.robot-antenna {
+  position: absolute;
+  top: 0;
+  left: 3.55rem;
+  width: 0.45rem;
+  height: 1.2rem;
+  border: 2px solid #111111;
+  border-bottom: 0;
+}
+
+.robot-antenna::before {
+  position: absolute;
+  top: -0.55rem;
+  left: -0.28rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 2px solid #111111;
+  border-radius: 50%;
+  content: "";
+}
+
+.robot-head {
+  position: absolute;
+  top: 1rem;
+  left: 1.8rem;
+  width: 4.1rem;
+  height: 3.25rem;
+  border: 2px solid #111111;
+  border-radius: 1rem 1rem 0.8rem 0.8rem;
+  background: rgba(255, 255, 255, 0.88);
+  transition: transform 500ms ease;
+}
+
+.robot-eye {
+  position: absolute;
+  top: 1rem;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #111111;
+}
+
+.robot-eye-left { left: 1rem; }
+.robot-eye-right { right: 1rem; }
+
+.robot-mouth {
+  position: absolute;
+  bottom: 0.62rem;
+  left: 1.55rem;
+  width: 0.9rem;
+  height: 0.38rem;
+  border-bottom: 2px solid #111111;
+  border-radius: 50%;
+}
+
+.robot-neck {
+  position: absolute;
+  top: 4.1rem;
+  left: 3.45rem;
+  width: 0.8rem;
+  height: 0.7rem;
+  border: 2px solid #111111;
+  border-top: 0;
+}
+
+.robot-torso {
+  position: absolute;
+  top: 4.65rem;
+  left: 1.55rem;
+  width: 4.6rem;
+  height: 4.75rem;
+  border: 2px solid #111111;
+  border-radius: 1rem 1rem 0.55rem 0.55rem;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.robot-panel {
+  position: absolute;
+  top: 1.15rem;
+  left: 1rem;
+  width: 2.5rem;
+  height: 1.55rem;
+  border: 2px solid #111111;
+  border-radius: 0.25rem;
+}
+
+.robot-panel::before,
+.robot-panel::after {
+  position: absolute;
+  width: 0.38rem;
+  height: 0.38rem;
+  border: 1px solid #111111;
+  border-radius: 50%;
+  content: "";
+}
+
+.robot-panel::before { top: 0.5rem; left: 0.45rem; }
+.robot-panel::after { top: 0.5rem; right: 0.45rem; }
+
+.robot-arm {
+  position: absolute;
+  top: 5.1rem;
+  width: 0.7rem;
+  height: 4.3rem;
+  border: 2px solid #111111;
+  border-radius: 0.7rem;
+  transform-origin: top center;
+}
+
+.robot-arm-left { left: 0.55rem; transform: rotate(10deg); }
+.robot-arm-right { right: 0.5rem; transform: rotate(-10deg); }
+
+.robot-leg {
+  position: absolute;
+  top: 9.2rem;
+  width: 0.8rem;
+  height: 3.55rem;
+  border: 2px solid #111111;
+  border-radius: 0 0 0.55rem 0.55rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.robot-leg-left { left: 2.5rem; }
+.robot-leg-right { right: 2.5rem; }
+
+.robot-speech {
+  position: absolute;
+  right: 7.6rem;
+  bottom: 8.8rem;
+  width: max-content;
+  max-width: min(22rem, calc(100vw - 5rem));
+  padding: 0.7rem 0.9rem;
+  border: 2px solid #111111;
+  border-radius: 0.45rem;
+  background: #ffffff;
+  box-shadow: 4px 4px 0 #111111;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  opacity: 0;
+  transform: translateY(0.5rem) scale(0.96);
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+
+.robot-speech::after {
+  position: absolute;
+  right: 0.9rem;
+  bottom: -0.62rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-right: 2px solid #111111;
+  border-bottom: 2px solid #111111;
+  background: #ffffff;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.robot-guide.is-greeting .robot-greeting,
+.robot-guide.is-oh .robot-oh,
+.robot-guide.is-searching .robot-search-prompt {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.robot-oh {
+  right: 7.8rem;
+}
+
+.robot-search-prompt {
+  right: 7.4rem;
+  width: min(22rem, calc(100vw - 5rem));
+}
+
+.robot-search-prompt p {
+  margin: 0 0 0.65rem;
+}
+
+.robot-search-form input {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #111111;
+  border-radius: 0.2rem;
+  background: #ffffff;
+  color: #111111;
+  font: inherit;
+}
+
+.robot-search-form input:focus {
+  outline: 2px solid #111111;
+  outline-offset: 2px;
+}
+
+.robot-guide.is-scratching .robot-arm-right {
+  animation: robotScratch 420ms ease-in-out 3;
+}
+
+.robot-highlight {
+  padding: 0 0.08em;
+  background: #111111;
+  color: #ffffff;
+}
+
+@keyframes robotWalkIn {
+  0% { opacity: 0; transform: translateX(9rem); }
+  14% { opacity: 1; transform: translateX(5.2rem); }
+  32% { opacity: 1; transform: translateX(5.2rem); }
+  68% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 1; transform: translateX(-6.25rem); }
+}
+
+@keyframes robotScratch {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(-62deg) translate(-0.35rem, -0.25rem); }
+}
+
+@media (max-width: 640px) {
+  .robot-guide {
+    height: 13.5rem;
+  }
+
+  .robot-speech,
+  .robot-search-prompt {
+    right: 6.8rem;
+    max-width: calc(100vw - 4.5rem);
+  }
+
+  .robot-character {
+    right: 0.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .robot-guide.is-visible .robot-character,
+  .robot-guide.is-scratching .robot-arm-right {
+    animation: none;
+  }
+}

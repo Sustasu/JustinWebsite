@@ -65,6 +65,8 @@ if (canvas) {
     let transitionStarted = performance.now();
     let scrollImpulse = 0;
     let scrollMotion = 0;
+    let tesseractBreak = 0;
+    let lastScrollAt = 0;
     let upwardScrollBoost = 0;
     let previousScrollY = window.scrollY;
     let pointerStillSince = 0;
@@ -83,12 +85,22 @@ if (canvas) {
     const particlePhases = new Float32Array(particleCount);
     const particleSpeeds = new Float32Array(particleCount);
     const particleArcs = new Float32Array(particleCount);
+    const particleBreakDirections = new Float32Array(particleCount * 3);
+    const particleBreakDistances = new Float32Array(particleCount);
     const eyeBlinkWeights = new Float32Array(particleCount);
     const mouthLipWeights = new Float32Array(particleCount);
     for (let index = 0; index < particleCount; index += 1) {
       particlePhases[index] = seeded(index + 4109) * Math.PI * 2;
       particleSpeeds[index] = 0.8 + seeded(index + 5209) * 1.4;
       particleArcs[index] = 0.08 + seeded(index + 6301) * 0.28;
+      particleBreakDistances[index] = 0.25 + seeded(index + 9301) * 0.85;
+      const directionOffset = index * 3;
+      const angle = seeded(index + 7401) * Math.PI * 2;
+      const vertical = seeded(index + 8501) * 2 - 1;
+      const horizontal = Math.sqrt(1 - vertical ** 2);
+      particleBreakDirections[directionOffset] = Math.cos(angle) * horizontal;
+      particleBreakDirections[directionOffset + 1] = vertical;
+      particleBreakDirections[directionOffset + 2] = Math.sin(angle) * horizontal;
     }
 
     const tesseractVertices = Array.from({ length: 16 }, (_, vertex) => [
@@ -493,6 +505,10 @@ if (canvas) {
       const scrollDelta = scrollY - previousScrollY;
       previousScrollY = scrollY;
       scrollImpulse = THREE.MathUtils.clamp(scrollImpulse + scrollDelta * 0.0022, -0.85, 0.85);
+      if (Math.abs(scrollDelta) > 0) {
+        lastScrollAt = performance.now();
+        tesseractBreak = THREE.MathUtils.clamp(tesseractBreak + Math.abs(scrollDelta) * 0.012, 0, 1);
+      }
       if (scrollDelta < -1) {
         upwardScrollBoost = Math.min(1, upwardScrollBoost + Math.max(0.18, Math.abs(scrollDelta) / 240));
       }
@@ -565,6 +581,9 @@ if (canvas) {
         pointerOffset.lerp(pointerTarget, pointerEase);
         scrollMotion += (scrollImpulse - scrollMotion) * (1 - Math.exp(-2.2 * delta));
         scrollImpulse *= Math.exp(-1.8 * delta);
+        if (performance.now() - lastScrollAt > 140) {
+          tesseractBreak *= Math.exp(-0.32 * delta);
+        }
         upwardScrollBoost *= Math.exp(-1.25 * delta);
         const idleDuration = lastPointerX !== null ? performance.now() - pointerStillSince : 0;
         const targetAttraction = idleDuration > 5000
@@ -586,7 +605,11 @@ if (canvas) {
           const phase = particlePhases[particleIndex] + easedTransition * particleSpeeds[particleIndex];
           const arc = Math.sin(Math.PI * easedTransition) * particleArcs[particleIndex];
           const curl = axis === 0 ? Math.cos(phase) : axis === 1 ? Math.sin(phase) : Math.sin(phase * 1.6) * 0.45;
-          positionArray[index] = THREE.MathUtils.lerp(startPositions[index], targetPositions[index], easedTransition) + curl * arc;
+          const breakDirection = particleBreakDirections[particleIndex * 3 + axis];
+          const breakDistance = tesseractBreak * particleBreakDistances[particleIndex];
+          positionArray[index] = THREE.MathUtils.lerp(startPositions[index], targetPositions[index], easedTransition)
+            + curl * arc
+            + (activeScene === "tesseract" ? breakDirection * breakDistance : 0);
           colorArray[index] = THREE.MathUtils.lerp(startColors[index], targetColors[index], easedTransition);
         }
 

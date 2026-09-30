@@ -338,7 +338,7 @@ const recommendationData = [
     date: 'Apr 3, 2018',
     type: 'received',
     relationship: 'Worked on the same team',
-    imageSrc: 'https://media.licdn.com/dms/image/v2/D4E35AQG_IJ6Jzgwb3Q/profile-framedphoto-shrink_100_100/B4EZniUl72HoAk-/0/1760438673631?e=1790766000&v=beta&t=F0RB2aO2m66YYMyatnTMSaDfbcQcLURhbFrAr5psuZs',
+    imageSrc: 'assets/martin-burford.jpg',
     imageAlt: 'Portrait of Martin Burford',
   },
 ];
@@ -420,3 +420,91 @@ recommendationTabs.forEach((tab) => {
 });
 
 setActiveRecommendationFilter('received');
+
+const robotGuide = document.querySelector('#robot-guide');
+const robotSearchInput = document.querySelector('#robot-search-input');
+
+if (robotGuide) {
+  const showSearchPrompt = () => {
+    robotGuide.classList.remove('is-oh', 'is-scratching');
+    robotGuide.classList.add('is-searching');
+    robotSearchInput?.focus({ preventScroll: true });
+  };
+
+  window.setTimeout(() => {
+    robotGuide.hidden = false;
+    requestAnimationFrame(() => {
+      robotGuide.classList.add('is-visible', 'is-greeting');
+    });
+
+    window.setTimeout(() => {
+      robotGuide.classList.remove('is-greeting');
+      robotGuide.classList.add('is-looking-away', 'is-oh');
+    }, 4700);
+
+    window.setTimeout(() => {
+      robotGuide.classList.remove('is-oh');
+      robotGuide.classList.add('is-scratching');
+    }, 7700);
+
+    window.setTimeout(showSearchPrompt, 9200);
+  }, 10000);
+}
+
+const clearRobotHighlights = () => {
+  document.querySelectorAll('main .robot-highlight').forEach((highlight) => {
+    highlight.replaceWith(document.createTextNode(highlight.textContent || ''));
+  });
+};
+
+const highlightRobotSearch = (value) => {
+  clearRobotHighlights();
+  const query = value.trim();
+  if (!query) return;
+
+  const terms = query
+    .split(/\s+/)
+    .filter(Boolean)
+    .sort((first, second) => second.length - first.length)
+    .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  if (!terms.length) return;
+
+  const matcher = new RegExp(terms.join('|'), 'gi');
+  const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  let currentNode = walker.nextNode();
+  while (currentNode) {
+    if (!currentNode.parentElement?.closest('script, style')) {
+      textNodes.push(currentNode);
+    }
+    currentNode = walker.nextNode();
+  }
+
+  let firstMatch = null;
+  textNodes.forEach((textNode) => {
+    matcher.lastIndex = 0;
+    if (!matcher.test(textNode.nodeValue || '')) return;
+    matcher.lastIndex = 0;
+    const fragment = document.createDocumentFragment();
+    let lastIndex = 0;
+    let match = matcher.exec(textNode.nodeValue || '');
+    while (match) {
+      fragment.appendChild(document.createTextNode((textNode.nodeValue || '').slice(lastIndex, match.index)));
+      const highlight = document.createElement('mark');
+      highlight.className = 'robot-highlight';
+      highlight.textContent = match[0];
+      fragment.appendChild(highlight);
+      firstMatch ||= highlight;
+      lastIndex = match.index + match[0].length;
+      match = matcher.exec(textNode.nodeValue || '');
+    }
+    fragment.appendChild(document.createTextNode((textNode.nodeValue || '').slice(lastIndex)));
+    textNode.replaceWith(fragment);
+  });
+
+  firstMatch?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
+
+robotSearchInput?.addEventListener('input', (event) => {
+  highlightRobotSearch(event.target.value);
+});
