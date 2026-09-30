@@ -46,6 +46,7 @@ if ("IntersectionObserver" in window && sections.length > 0) {
 
 if (experienceModal && experienceModalTitle && experienceModalCopy.length === 2) {
   let activeExperienceCard = null;
+  let modalScrollPosition = 0;
 
   const openExperienceModal = (card) => {
     activeExperienceCard = card;
@@ -72,11 +73,13 @@ if (experienceModal && experienceModalTitle && experienceModalCopy.length === 2)
     // If the injected content contains an image slideshow, initialise it
     const imageContainer = experienceModalExtraContent.querySelector('.image-slideshow');
     if (imageContainer) {
-      initImageSlideshow(imageContainer);
       document.querySelector('.experience-modal-panel')?.classList.add('modal-gallery');
     }
 
+    modalScrollPosition = window.scrollY;
+    document.body.style.top = `-${modalScrollPosition}px`;
     experienceModal.hidden = false;
+    document.documentElement.classList.add("is-modal-open");
     document.body.classList.add("is-modal-open");
     experienceModalClose?.focus();
   };
@@ -106,7 +109,10 @@ if (experienceModal && experienceModalTitle && experienceModalCopy.length === 2)
     document.querySelector('.experience-modal-panel')?.classList.remove('modal-gallery');
 
     experienceModal.hidden = true;
+    document.documentElement.classList.remove("is-modal-open");
     document.body.classList.remove("is-modal-open");
+    document.body.style.top = "";
+    window.scrollTo({ top: modalScrollPosition, left: 0, behavior: "instant" });
 
     if (activeExperienceCard) {
       activeExperienceCard.focus();
@@ -423,6 +429,9 @@ setActiveRecommendationFilter('received');
 
 const robotGuide = document.querySelector('#robot-guide');
 const robotSearchInput = document.querySelector('#robot-search-input');
+const robotSearchForm = document.querySelector('.robot-search-form');
+const robotChatLog = document.querySelector('.robot-chat-log');
+const robotCloseButtons = document.querySelectorAll('.robot-close');
 
 if (robotGuide) {
   const showSearchPrompt = () => {
@@ -434,20 +443,24 @@ if (robotGuide) {
   window.setTimeout(() => {
     robotGuide.hidden = false;
     requestAnimationFrame(() => {
-      robotGuide.classList.add('is-visible', 'is-greeting');
+      robotGuide.classList.add('is-visible');
     });
+
+    window.setTimeout(() => {
+      robotGuide.classList.add('is-greeting');
+    }, 4800);
 
     window.setTimeout(() => {
       robotGuide.classList.remove('is-greeting');
       robotGuide.classList.add('is-looking-away', 'is-oh');
-    }, 4700);
+    }, 9500);
 
     window.setTimeout(() => {
       robotGuide.classList.remove('is-oh');
       robotGuide.classList.add('is-scratching');
-    }, 7700);
+    }, 12500);
 
-    window.setTimeout(showSearchPrompt, 9200);
+    window.setTimeout(showSearchPrompt, 14000);
   }, 10000);
 }
 
@@ -457,17 +470,96 @@ const clearRobotHighlights = () => {
   });
 };
 
+const getRobotEditDistance = (first, second) => {
+  const previousRow = Array.from({ length: second.length + 1 }, (_, index) => index);
+
+  for (let firstIndex = 1; firstIndex <= first.length; firstIndex += 1) {
+    const currentRow = [firstIndex];
+    for (let secondIndex = 1; secondIndex <= second.length; secondIndex += 1) {
+      const substitutionCost = first[firstIndex - 1] === second[secondIndex - 1] ? 0 : 1;
+      currentRow[secondIndex] = Math.min(
+        currentRow[secondIndex - 1] + 1,
+        previousRow[secondIndex] + 1,
+        previousRow[secondIndex - 1] + substitutionCost
+      );
+    }
+    previousRow.splice(0, previousRow.length, ...currentRow);
+  }
+
+  return previousRow[second.length];
+};
+
+const resolveRobotTerms = (terms) => {
+  const pageWords = (document.querySelector('main')?.innerText.toLowerCase().match(/[a-z0-9+#.-]+/g) || []);
+  const vocabulary = [...new Set(pageWords.filter((word) => word.length > 2))];
+  const vocabularySet = new Set(vocabulary);
+  const corrections = [];
+
+  const resolvedTerms = terms.map((term) => {
+    if (vocabularySet.has(term) || term.length < 4) return term;
+
+    const maximumDistance = term.length >= 7 ? 2 : 1;
+    let closestTerm = term;
+    let closestDistance = maximumDistance + 1;
+
+    vocabulary.forEach((candidate) => {
+      if (Math.abs(candidate.length - term.length) > maximumDistance) return;
+      const distance = getRobotEditDistance(term, candidate);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestTerm = candidate;
+      }
+    });
+
+    if (closestTerm !== term) corrections.push({ from: term, to: closestTerm });
+    return closestTerm;
+  });
+
+  return { terms: [...new Set(resolvedTerms)], corrections };
+};
+
+const getRobotAlternatives = (terms) => {
+  const cvText = document.querySelector('main')?.innerText.toLowerCase() || '';
+  const cvTopics = [
+    'accessibility', 'agile', 'api', 'automation', 'cypress', 'jira',
+    'leadership', 'manual', 'mobile', 'performance', 'playwright', 'qa',
+    'selenium', 'testing'
+  ].filter((topic) => cvText.includes(topic));
+
+  const rankedTopics = cvTopics
+    .map((topic) => ({
+      topic,
+      distance: Math.min(...terms.map((term) => getRobotEditDistance(term, topic)))
+    }))
+    .sort((first, second) => first.distance - second.distance);
+  const closeTopics = rankedTopics
+    .filter(({ distance }) => distance <= 3)
+    .slice(0, 2)
+    .map(({ topic }) => topic);
+
+  return closeTopics.length ? closeTopics : ['qa', 'automation', 'testing'];
+};
+
 const highlightRobotSearch = (value) => {
   clearRobotHighlights();
   const query = value.trim();
-  if (!query) return;
+  if (!query) return { count: 0, terms: [] };
 
-  const terms = query
-    .split(/\s+/)
-    .filter(Boolean)
+  const stopWords = new Set([
+    'a', 'about', 'all', 'an', 'and', 'any', 'are', 'can', 'cv', 'did', 'do',
+    'does', 'experience', 'for', 'has', 'have', 'he', 'his', 'how', 'i', 'in',
+    'is', 'it', 'know', 'me', 'of', 'on', 'please', 'show', 'skills', 'tell',
+    'the', 'to', 'what', 'with', 'work', 'worked', 'you'
+  ]);
+  const requestedTerms = [...new Set(query
+    .toLowerCase()
+    .match(/[a-z0-9+#.-]+/g) || [])]
+    .filter((term) => term.length > 1 && !stopWords.has(term));
+  const { terms: resolvedTerms, corrections } = resolveRobotTerms(requestedTerms);
+  const terms = resolvedTerms
     .sort((first, second) => second.length - first.length)
     .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  if (!terms.length) return;
+  if (!terms.length) return { count: 0, terms: [], corrections: [] };
 
   const matcher = new RegExp(terms.join('|'), 'gi');
   const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT);
@@ -481,6 +573,7 @@ const highlightRobotSearch = (value) => {
   }
 
   let firstMatch = null;
+  let matchCount = 0;
   textNodes.forEach((textNode) => {
     matcher.lastIndex = 0;
     if (!matcher.test(textNode.nodeValue || '')) return;
@@ -494,6 +587,7 @@ const highlightRobotSearch = (value) => {
       highlight.className = 'robot-highlight';
       highlight.textContent = match[0];
       fragment.appendChild(highlight);
+      matchCount += 1;
       firstMatch ||= highlight;
       lastIndex = match.index + match[0].length;
       match = matcher.exec(textNode.nodeValue || '');
@@ -503,8 +597,79 @@ const highlightRobotSearch = (value) => {
   });
 
   firstMatch?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  return { count: matchCount, terms, corrections };
 };
 
-robotSearchInput?.addEventListener('input', (event) => {
-  highlightRobotSearch(event.target.value);
+const addRobotMessage = (message, sender) => {
+  if (!robotChatLog) return;
+  const chatMessage = document.createElement('p');
+  chatMessage.className = `robot-chat-message robot-chat-message-${sender}`;
+  chatMessage.textContent = message;
+  robotChatLog.appendChild(chatMessage);
+  robotChatLog.scrollTop = robotChatLog.scrollHeight;
+};
+
+const getRobotFallbackMessage = (topics, count) => {
+  const relatedAreas = count === 1 ? 'related area' : 'related areas';
+  const responses = [
+    `That sounds closest to ${topics}. I've highlighted ${count} ${relatedAreas} you may find useful.`,
+    `A useful direction here is ${topics}. I've marked ${count} ${relatedAreas} across the CV.`,
+    `The strongest related themes are ${topics}. You can now see ${count} highlighted ${relatedAreas}.`,
+    `I'd point you toward ${topics}. I've highlighted ${count} ${relatedAreas} worth exploring.`,
+    `${topics} look like the best related fit. I've surfaced ${count} ${relatedAreas} for you.`
+  ];
+
+  return responses[Math.floor(Math.random() * responses.length)];
+};
+
+const answerRobotQuestion = () => {
+  const question = robotSearchInput?.value.trim() || '';
+  if (!question) return;
+
+  addRobotMessage(question, 'user');
+  const result = highlightRobotSearch(question);
+  const correctionMessage = result.corrections.length
+    ? `I understood ${result.corrections.map(({ from, to }) => `“${from}” as “${to}”`).join(' and ')}. `
+    : '';
+
+  if (!result.terms.length) {
+    addRobotMessage('Ask me about a specific skill, tool, role, or type of testing.', 'bot');
+  } else if (result.count === 0) {
+    const alternatives = getRobotAlternatives(result.terms);
+    const alternativeResult = highlightRobotSearch(alternatives.join(' '));
+    const alternativeSubject = alternatives.join(', ');
+    const fallbackMessage = getRobotFallbackMessage(alternativeSubject, alternativeResult.count);
+    addRobotMessage(`${correctionMessage}${fallbackMessage}`, 'bot');
+  } else {
+    const subject = result.terms.map((term) => term.replace(/\\/g, '')).join(', ');
+    const mentions = result.count === 1 ? 'mention' : 'mentions';
+    addRobotMessage(`${correctionMessage}Yes — I found ${result.count} ${mentions} related to ${subject}. I've highlighted them for you.`, 'bot');
+  }
+
+  robotSearchInput.value = '';
+};
+
+robotSearchForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  answerRobotQuestion();
+});
+
+robotSearchInput?.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter') return;
+  event.preventDefault();
+  answerRobotQuestion();
+});
+
+robotCloseButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    robotGuide.hidden = true;
+    robotGuide.classList.remove(
+      'is-visible',
+      'is-greeting',
+      'is-looking-away',
+      'is-oh',
+      'is-scratching',
+      'is-searching'
+    );
+  });
 });
